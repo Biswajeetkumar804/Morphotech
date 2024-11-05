@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Application Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+            background-image: url(image/login.png);
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background: linear-gradient(to right, #0f0fec, #060505);
+            align-items: center;
+        }
+        h1 {
+            text-align: center;
+            color: #fcf9f9;
+        }
+        form {
+            display: grid;
+            gap: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #1410f7;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="image/logo5-removebg-preview.png" alt="" style="height: 100px; width: 130px; background-color: white; border-radius: 60px;">
+        <h1>Internship Application Form</h1>
+        <form id="internship-form">
+            <label for="fullName" style="color: white;">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required>
+
+            <label for="email" style="color: white;">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone" style="color: white;">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="dob" style="color: white;">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+
+            <label for="university" style="color: white;">University:</label>
+            <input type="text" id="university" name="university" required>
+
+            <label for="major" style="color: white;">Major:</label>
+            <input type="text" id="major" name="major" required>
+
+            <label for="gradYear" style="color: white;">Expected Graduation Year:</label>
+            <input type="text" id="gradYear" name="gradYear" required>
+
+            <label for="gpa" style="color: white;">GPA:</label>
+            <input type="text" id="gpa" name="gpa" required>
+
+            <label for="internshipArea" style="color: white;">Preferred Internship Area:</label>
+            <select id="internshipArea" name="internshipArea" required>
+                <option value="">Select an area</option>
+                <option value="software">Software Development</option>
+                <option value="data">Data Science</option>
+                <option value="marketing">Digital Marketing</option>
+                <option value="design">Graphic Design</option>
+                <option value="business">Business Analytics</option>
+            </select>
+
+            <label for="startDate" style="color: white;">Preferred Start Date:</label>
+            <input type="date" id="startDate" name="startDate" required>
+
+            <label for="duration" style="color: white;">Internship Duration (in months):</label>
+            <input type="number" id="duration" name="duration" min="1" max="12" required>
+
+            <label for="skills" style="color: white;">Relevant Skills:</label>
+            <textarea id="skills" name="skills" rows="4" required></textarea>
+
+            <label for="whyApply" style="color: white;">Why do you want to apply for this internship?</label>
+            <textarea id="whyApply" name="whyApply" rows="4" required></textarea>
+
+            <input type="submit" value="Submit Application">
+        </form>
+    </div>
+
+    <script>
+        // Handle form submission
+        document.getElementById('internship-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent page reload
+
+            const formData = {
+                fullName: document.getElementById('fullName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                dob: document.getElementById('dob').value,
+                university: document.getElementById('university').value,
+                major: document.getElementById('major').value,
+                gradYear: document.getElementById('gradYear').value,
+                gpa: document.getElementById('gpa').value,
+                internshipArea: document.getElementById('internshipArea').value,
+                startDate: document.getElementById('startDate').value,
+                duration: document.getElementById('duration').value,
+                skills: document.getElementById('skills').value,
+                whyApply: document.getElementById('whyApply').value
+            };
+
+            fetch('http://localhost:5000/apply', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Application submitted successfully!');
+                // Optionally redirect to a "Thank You" page
+                window.location.href = 'thankyou.html';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            background-image: url('/morphotech/Morphotech/image/login.png');
+            background-size: cover; /* or contain, depending on your needs */
+            
+            height: 100%;
+            width: 100%;
+        }
+        .container {
+            width: 300px;
+            height: 450px;
+            margin: 100px auto;
+            padding: 20px;
+            background: linear-gradient(to right, #0f0fec, #060505);
+            border-radius: 30px;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
+            text-align: center;
+           
+            margin-top: 30px;
+        }
+        .container1 {
+            width: 400px;
+            height: 550px;
+            margin: 100px auto;
+            padding: 20px;
+            background: linear-gradient(to right, #060505, #0f0fec);
+            border-radius: 30px;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
+
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 92%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #010101;
+            
+        }
+        input[type="submit"] {
+            background-color: #1410f7;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #000000;
+        }
+    </style>
+</head>
+<body>
+<div class="container1">
+    <div class="container">
+        <img src="image/logo5-removebg-preview.png" alt="" style="height: 100px; width: 130px; background-color: white; border-radius: 60px;">
+        <h1 style="color: white;">Sign Up</h1>
+        <form id="signup-form">
+            <label for="username" style="color: white;">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter New Username" required>
+
+            <label for="email" style="color: white;">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter New Email">
+
+            <label for="password" style="color: white;">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter Password">
+
+            <input type="submit" value="Sign Up">
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById('signup-form').addEventListener('submit', function(event) {
+        event.preventDefault();  // Prevent the form from submitting the default way
+
+        const formData = {
+            username: document.getElementById('username').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value
+        };
+        console.log("abasb");
+        fetch('http://localhost:5000/auth/signup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Signup successful! Redirecting to login page.');
+                window.location.href = 'login.html';  // Redirect to login page
+            } else {
+                alert(data.message || 'Signup failed.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+</script>
+
+</body>
+</html>
